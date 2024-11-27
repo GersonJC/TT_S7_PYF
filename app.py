@@ -36,6 +36,35 @@ if st.button('Construir Histograma'):
     fig = px.histogram(data_base, x=odometer_column, title=f"Histograma de {odometer_column}")
     placeholder.plotly_chart(fig, use_container_width=True)
 
+# Definir marcas de vehículos como constante
+VEHICLE_MAKES = ['ford', 'chevrolet', 'toyota', 'honda', 'nissan']
+data_base['marke'] = data_base['model'].str.split().str[0].str.lower()
+
+# Botón para construir un gráfico de barras
+if st.button('Construir Gráfico de Barras'):
+    st.write('Creación de gráfico de barras')
+    make_counts = data_base['marke'].value_counts().reindex(VEHICLE_MAKES, fill_value=0)
+    fig = px.bar(
+        x=make_counts.index,
+        y=make_counts.values,
+        labels={'x': 'Fabricante', 'y': 'Cantidad'},
+        title="Cantidad de vehículos por fabricante",
+    )
+    placeholder.plotly_chart(fig, use_container_width=True)
+
+# Botón para construir un gráfico de líneas
+if st.button('Construir Gráfico de Líneas'):
+    st.write('Creación de gráfico de líneas')
+    #data_base['model_year'] = pd.to_datetime(data_base['dateCrawled']).dt.year
+    avg_price_by_year = data_base.groupby('model_year')['price'].mean().reset_index()
+    fig = px.line(
+        avg_price_by_year,
+        x='model_year',
+        y='price',
+        labels={'year': 'Año', 'price': 'Precio Promedio ($)'},
+        title="Tendencia del precio promedio por año"
+    )
+    placeholder.plotly_chart(fig, use_container_width=True)
 
 # Botón para limpiar gráficos
 if st.button('Limpiar Gráficos'):
