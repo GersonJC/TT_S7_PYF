@@ -3,8 +3,8 @@ import pandas as pd
 import plotly.express as px
 
 # Cargar archivo
-path = "E:\\TripleTen\\Data Scients\\Sprint_7\\Proyecto\\"
-archivo = path + 'vehicles_us.csv'
+# path = "E:\\TripleTen\\Data Scients\\Sprint_7\\Proyecto\\"
+archivo = 'vehicles_us.csv'
 
 # Manejo de errores al cargar el archivo
 try:
